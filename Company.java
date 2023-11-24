@@ -21,11 +21,20 @@ public class Company {
     public void listEmployees(){
         Employee.list(allEmployees);
     }
-    public Employee searchEmployee(String name){
-        return Employee.searchEmployee(allEmployees, name);
+    public Employee searchEmployee(String name) throws ExEmployeeNotFound{
+        Employee e = Employee.searchEmployee(allEmployees, name);
+        if(e != null) {
+            return e;
+        }
+        throw new ExEmployeeNotFound();
+        
     }
-    public Team searchTeam (String teamName){
-        return Team.searchTeam(allTeams, teamName);
+    public Team searchTeam (String teamName) throws ExTeamNotFound {
+        Team t = Team.searchTeam(allTeams, teamName);
+        if(t != null){
+            return t;
+        }
+        throw new ExTeamNotFound();
     }
     public Employee createEmployee(String name, int l) // See how it is called in main()
     {
@@ -34,9 +43,12 @@ public class Company {
         Collections.sort(allEmployees); //allEmployees
         return e;
     }
-    public void addEmployee(Employee e){
-        allEmployees.add(e);
-        Collections.sort(allEmployees);
+    public void addEmployee(Employee e) throws ExEmployeeAlreadyExists{
+        if(!allEmployees.contains(e)){
+            allEmployees.add(e);
+            Collections.sort(allEmployees);
+        }
+        throw new ExEmployeeAlreadyExists();
     }
     public void removeEmployee(Employee e){
         allEmployees.remove(e);
