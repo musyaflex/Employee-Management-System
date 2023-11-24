@@ -1,4 +1,4 @@
-public class StartNewDay extends RecordedCommand{
+public class CmdStartNewDay extends RecordedCommand{
     SystemDate datePrev;
     SystemDate date;
     @Override

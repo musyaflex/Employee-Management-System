@@ -1,4 +1,4 @@
-public class SetupTeam extends RecordedCommand {
+public class CmdSetupTeam extends RecordedCommand {
     Team t;
     @Override
 	public void execute(String[] cmdParts)
