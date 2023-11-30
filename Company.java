@@ -44,17 +44,24 @@ public class Company {
         return e;
     }
     public void addEmployee(Employee e) throws ExEmployeeAlreadyExists{
-        if(!allEmployees.contains(e)){
-            allEmployees.add(e);
-            Collections.sort(allEmployees);
+        for(Employee emp: allEmployees){
+            if(emp.getName() == e.getName()){
+                throw new ExEmployeeAlreadyExists();
+            }
         }
-        throw new ExEmployeeAlreadyExists();
+        allEmployees.add(e);
+        Collections.sort(allEmployees);
     }
     public void removeEmployee(Employee e){
         allEmployees.remove(e);
         Collections.sort(allEmployees);
     }
-    public void addTeam(Team t){
+    public void addTeam(Team t) throws ExTeamAlreadyExists {
+        for(Team team: allTeams){
+            if(team.getName() == t.getName()){
+                throw new ExTeamAlreadyExists();
+            }
+        }
         allTeams.add(t);
         Collections.sort(allTeams);
     }

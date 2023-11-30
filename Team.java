@@ -48,10 +48,10 @@ public class Team implements Comparable<Team>{
     }
 
     public void listMembers(){
-        System.out.printf("%-30s%-10s%-13s\n", "Role", "Name", "Current / Coming leaves" );
-        System.out.printf("%-30s%-10s%-13s\n", "Leader", head.getName(), "--" );
+        System.out.printf("%-10s%-10s%-13s\n", "Role", "Name", "Current / Coming leaves" );
+        System.out.printf("%-10s%-10s%-13s\n", "Leader", head.getName(), "--" );
         for(Employee e: members){
-            System.out.printf("%-30s%-10s%-13s\n", "Member", e.getName(), "--" );
+            System.out.printf("%-10s%-10s%-13s\n", "Member", e.getName(), "--" );
         }
     }
 

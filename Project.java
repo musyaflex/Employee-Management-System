@@ -41,13 +41,13 @@ public class Project implements Comparable<Project>{
         return team;
     }
     public static void list(ArrayList<Project> projects){
-        System.out.printf("%-10s%-13s%-13s%-6s\n", "Project", "Start Day", "End Day", "Team");
+        System.out.printf("%-9s%-13s%-13s%-13s\n", "Project", "Start Day", "End Day", "Team");
         for (Project project: projects){
             String teamInfo = "--";
             if(project.getTeam() != null){
                 teamInfo = project.getTeamInfo();
             }
-            System.out.printf( "%-10s%-13s%-13s%-6s\n", project.getCode(), project.getStartDay(), project.getEndDay(), teamInfo); 
+            System.out.printf( "%-9s%-13s%-13s%-13s\n", project.getCode(), project.getStartDay(), project.getEndDay(), teamInfo); 
         }
     }
     
