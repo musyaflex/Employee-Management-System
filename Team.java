@@ -28,6 +28,22 @@ public class Team implements Comparable<Team>{
     public String getName(){
         return teamName;
     }
+    public Employee getHead(){
+        return head;
+    }
+    public boolean isMember(Employee e){
+        String name = e.getName();
+        if(name.equals(head.getName()))
+            return true;
+        else{
+            for(Employee member: members){
+                if(member.getName().equals(name)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     // public static Team searchTeam(ArrayList<Team> teams, String teamName) throws ExTeamNotFound{
     public static Team searchTeam(ArrayList<Team> teams, String teamName){
         for(Team t: teams){

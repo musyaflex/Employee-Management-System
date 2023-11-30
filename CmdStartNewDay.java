@@ -4,12 +4,18 @@ public class CmdStartNewDay extends RecordedCommand{
     @Override
 	public void execute(String[] cmdParts)
 	{
-        datePrev = SystemDate.getInstance();
-        SystemDate.setInstance(cmdParts[1]);
-        date = SystemDate.getInstance();
-        addUndoCommand(this);
-        clearRedoList();
-        System.out.println("Done.");
+                try{
+                        if(cmdParts.length<2)
+                                throw new ExInsufficientArguments();
+                        datePrev = SystemDate.getInstance();
+                        SystemDate.setInstance(cmdParts[1]);
+                        date = SystemDate.getInstance();
+                        addUndoCommand(this);
+                        clearRedoList();
+                        System.out.println("Done.");
+                } catch(ExInsufficientArguments e){
+                        System.out.println(e.getMessage());
+                }
 	}
     @Override
 	public void undoMe()

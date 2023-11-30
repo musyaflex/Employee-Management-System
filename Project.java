@@ -54,7 +54,7 @@ public class Project implements Comparable<Project>{
     public void setTeam(Team t){
         team = t;
     }
-    public void unsetTeam(Team t){
+    public void unsetTeam(){
         team = null;
     }
 }

@@ -15,7 +15,7 @@ public class CmdHire extends RecordedCommand{
 			clearRedoList();
 			System.out.println("Done.");
 		} catch(NumberFormatException e){
-			System.out.println("Wrong number format.");
+			System.out.println("Wrong number format for annual leaves!");
 		} catch(ExEmployeeAlreadyExists e){
 			System.out.println(e.getMessage());
 		} catch(ExInsufficientArguments e){

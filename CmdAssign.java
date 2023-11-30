@@ -11,12 +11,16 @@ public class CmdAssign extends RecordedCommand{
             String teamName = cmdParts[2];
             Company company = Company.getInstance();
             project = company.searchProject(projectCode);
-            Team t = company.searchTeam(teamName);
+            t = company.searchTeam(teamName);
             company.assignProject(t, project);
             addUndoCommand(this);
             clearRedoList();
             System.out.println("Done.");
         } catch(ExTeamNotFound e){
+			System.out.println(e.getMessage());
+		} catch(ExProjectAlreadyAssigned e){
+			System.out.println(e.getMessage() + e.getTeamName());
+		} catch(ExProjectNotFound e){
 			System.out.println(e.getMessage());
 		} catch(ExInsufficientArguments e){
 			System.out.println(e.getMessage());
@@ -33,9 +37,12 @@ public class CmdAssign extends RecordedCommand{
 	
 	@Override
 	public void redoMe()
-	{
-		Company company = Company.getInstance();
-        company.assignProject(t, project);
-		addUndoCommand(this); //<====== upon redo, we should keep a copy in the undo list
+	{	try{
+			Company company = Company.getInstance();
+        	company.assignProject(t, project);
+			addUndoCommand(this); //<====== upon redo, we should keep a copy in the undo list
+		} catch(ExProjectAlreadyAssigned e){
+			System.out.println(e.getMessage() + e.getTeamName());
+		} 
 	}
 }

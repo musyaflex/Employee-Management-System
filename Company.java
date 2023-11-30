@@ -36,30 +36,34 @@ public class Company {
         }
         throw new ExTeamNotFound();
     }
-    public Employee createEmployee(String name, int l) // See how it is called in main()
-    {
-        Employee e = new Employee(name, l);
-        allEmployees.add(e);
-        Collections.sort(allEmployees); //allEmployees
-        return e;
-    }
+    // public Employee createEmployee(String name, int l) // See how it is called in main()
+    // {
+    //     Employee e = new Employee(name, l);
+    //     allEmployees.add(e);
+    //     Collections.sort(allEmployees); //allEmployees
+    //     return e;
+    // }
     public void addEmployee(Employee e) throws ExEmployeeAlreadyExists{
         for(Employee emp: allEmployees){
-            if(emp.getName() == e.getName()){
+            if(emp.getName().equals(e.getName())){
                 throw new ExEmployeeAlreadyExists();
             }
         }
         allEmployees.add(e);
         Collections.sort(allEmployees);
+        
     }
     public void removeEmployee(Employee e){
         allEmployees.remove(e);
         Collections.sort(allEmployees);
     }
-    public void addTeam(Team t) throws ExTeamAlreadyExists {
+    public void addTeam(Team t) throws ExTeamAlreadyExists, ExEmployeeAlreadyInTeam {
         for(Team team: allTeams){
-            if(team.getName() == t.getName()){
+            if(team.getName().equals(t.getName())){
                 throw new ExTeamAlreadyExists();
+            }
+            if(team.isMember(t.getHead())){
+                throw new ExEmployeeAlreadyInTeam(team, t.getHead());
             }
         }
         allTeams.add(t);
@@ -69,14 +73,14 @@ public class Company {
         allTeams.remove(t);
         Collections.sort(allTeams);
     }
-    public Team createTeam(String g, String name) // See how it is called in main()
-    {
-        Employee e = Employee.searchEmployee(allEmployees, name);
-        Team t = new Team(g, e);
-        allTeams.add(t);
-        Collections.sort(allTeams); //allTeams
-        return t; //Why return?  Ans: Later you'll find it useful for undoable comments.
-    }
+    // public Team createTeam(String g, String name) // See how it is called in main()
+    // {
+    //     Employee e = Employee.searchEmployee(allEmployees, name);
+    //     Team t = new Team(g, e);
+    //     allTeams.add(t);
+    //     Collections.sort(allTeams); //allTeams
+    //     return t; //Why return?  Ans: Later you'll find it useful for undoable comments.
+    // }
 
     public void joinTeam(Team t, Employee e){
         t.addMember(e);
@@ -92,7 +96,7 @@ public class Company {
 
     public void addProject(Project p) throws ExProjectAlreadyExists{
         for(Project project: allProjects){
-            if(project.getCode() == p.getCode()){
+            if(project.getCode().equals(p.getCode())){
                 throw new ExProjectAlreadyExists();
             }
         }
@@ -105,18 +109,27 @@ public class Company {
         Collections.sort(allProjects);
     }
     
-    public Project searchProject (String projectCode){
-        return Project.searchProject(allProjects, projectCode);
+    public Project searchProject (String projectCode) throws ExProjectNotFound{
+        Project p = Project.searchProject(allProjects, projectCode);
+        if(p != null) {
+            return p;
+        }
+        throw new ExProjectNotFound();
     }
 
-    public void assignProject(Team t, Project p){
-        t.addProject(p);
-        p.setTeam(t);
+    public void assignProject(Team t, Project p) throws ExProjectAlreadyAssigned {
+        if(p.getTeam() != null){
+            throw new ExProjectAlreadyAssigned(p.getTeam());
+        }
+        else{
+            t.addProject(p);
+            p.setTeam(t);
+        }
     }
 
     public void unassignProject(Team t, Project p){
         t.removeProject(p);
-        p.unsetTeam(t);
+        p.unsetTeam();
     }
 
     public void listProjects(){

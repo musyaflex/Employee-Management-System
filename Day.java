@@ -1,4 +1,4 @@
-public class Day implements Cloneable{
+public class Day implements Cloneable, Comparable<Day>{
 	
 	private int year;
 	private int month;
@@ -12,6 +12,10 @@ public class Day implements Cloneable{
 	}
 	public Day(String sDay){
         set(sDay);
+    }
+	@Override
+    public int compareTo(Day another)  {
+        return this.getCompareString().compareTo(another.getCompareString());
     }
     public void set(String sDay){
         String[] sDayParts = sDay.split("-");
@@ -75,7 +79,9 @@ public class Day implements Cloneable{
 	public String toString() {
 		return day+"-"+ MonthNames.substring(3*(month-1), 3*(month-1)+3) + "-" + year;
 	}
-	
+	public String getCompareString(){
+		return year+""+month+day;
+	}
 	public Day takeNextDay(){
 		int year = this.getYear();
 		int month = this.getMonth();
