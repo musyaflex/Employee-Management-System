@@ -16,9 +16,7 @@ public class CmdAssign extends RecordedCommand{
             addUndoCommand(this);
             clearRedoList();
             System.out.println("Done.");
-        } catch(NumberFormatException e){
-			System.out.println("Wrong number format.");
-		} catch(ExTeamNotFound e){
+        } catch(ExTeamNotFound e){
 			System.out.println(e.getMessage());
 		} catch(ExInsufficientArguments e){
 			System.out.println(e.getMessage());

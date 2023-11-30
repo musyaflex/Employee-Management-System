@@ -90,7 +90,12 @@ public class Company {
         t.listMembers();
     }
 
-    public void addProject(Project p){
+    public void addProject(Project p) throws ExProjectAlreadyExists{
+        for(Project project: allProjects){
+            if(project.getCode() == p.getCode()){
+                throw new ExProjectAlreadyExists();
+            }
+        }
         allProjects.add(p);
         Collections.sort(allProjects);
     }

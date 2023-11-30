@@ -1,9 +1,11 @@
-public class ListTeams extends RecordedCommand{
+public class CmdListProjects extends RecordedCommand{
+    
     @Override
 	public void execute(String[] cmdParts)
 	{
         Company company = Company.getInstance();
-        company.listTeams();
+        company.listProjects();
+
 	}
     @Override
 	public void undoMe()

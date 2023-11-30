@@ -53,6 +53,8 @@ public class Main {
 					(new CmdAssign()).execute(cmdParts);
 				else if (cmdParts[0].equals("listProjects"))
 					(new CmdListProjects()).execute(cmdParts);
+				else if (cmdParts[0].equals("listTeamMembers"))
+					(new CmdListProjects()).execute(cmdParts);
 				else if (cmdParts[0].equals("undo"))
 					RecordedCommand.undoOneCommand();
 				else if (cmdParts[0].equals("redo"))
@@ -61,11 +63,11 @@ public class Main {
 					throw new ExWrongCommand();
 			}
 		} catch(FileNotFoundException e){
-            System.out.println("File not found.");
+            System.out.println("File not found!");
         } catch(InputMismatchException e){
-            System.out.println("File content problem. Program terminated.");
+            System.out.println("File content problem!");
         } catch(ExWrongCommand e){
-            System.out.println("Unknown command - ignored.");
+            System.out.println("Unknown command - ignored!");
         } finally{
             if(inFile!=null) inFile.close();
             in.close();
