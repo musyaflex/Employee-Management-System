@@ -1,5 +1,5 @@
 public class CmdCreateProject extends RecordedCommand{
-    Project project;
+    private Project project;
     @Override
 	public void execute(String[] cmdParts)
 	{   try{

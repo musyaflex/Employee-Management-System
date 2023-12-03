@@ -1,5 +1,5 @@
 public class CmdSetupTeam extends RecordedCommand {
-        Team t;
+        private Team t;
         @Override
         public void execute(String[] cmdParts)
         {       try{

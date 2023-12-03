@@ -80,7 +80,15 @@ public class Day implements Cloneable, Comparable<Day>{
 		return day+"-"+ MonthNames.substring(3*(month-1), 3*(month-1)+3) + "-" + year;
 	}
 	public String getCompareString(){
-		return year+""+month+day;
+		String monthString = Integer.toString(month);
+		String dayString = Integer.toString(day);
+		
+		if(day < 10) 
+			dayString = "0"+dayString;
+		if(month < 10) 
+			monthString = "0"+monthString;
+		
+		return year+monthString+dayString;		
 	}
 	public Day takeNextDay(){
 		int year = this.getYear();
@@ -103,5 +111,40 @@ public class Day implements Cloneable, Comparable<Day>{
 			startDay = startDay.takeNextDay();
 		}
 		return startDay;
+	}
+
+	public static int getPeriod(Day startDay, Day endDay){
+		int period = 1;
+		while(startDay.compareTo(endDay) != 0){
+			startDay = startDay.takeNextDay();
+			period++;
+		}
+		return period;
+	}
+
+	public static boolean overlap(DatesPair daysPair1, DatesPair daysPair2){
+		Day startDate1 = daysPair1.getStart();
+		Day startDate2 = daysPair2.getStart();
+		Day endDate1 = daysPair1.getEnd();
+		Day endDate2 = daysPair2.getEnd();
+		if(startDate1.isBetween(startDate2, endDate2)){
+			return true;
+		}
+		else if(startDate2.isBetween(startDate1, endDate1)){
+			return true;
+		}
+		else if(endDate1.isBetween(startDate2, endDate2)){
+			return true;
+		}
+		else if(endDate2.isBetween(startDate1, endDate1)){
+			return true;
+		}
+		return false;
+	}
+	public boolean isBetween(Day start, Day end){
+		if(this.compareTo(start) >= 0 && this.compareTo(end) <= 0){
+			return true;
+		}
+		return false;
 	}
 }

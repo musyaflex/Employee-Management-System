@@ -1,23 +1,34 @@
-startNewDay|20-Feb-2023
+startNewDay|01-Jan-2023
 
-hire|Angel|14
-hire|Brian|14
+hire|Bob|30
+hire|Carol|20
+
 listEmployees
 
-setupTeam|X Troop|Angel 
-listTeams
+takeLeave|Bob|02-Feb-2023|08-Feb-2023
+takeLeave|Carol|03-Jan-2023|08-Jan-2023
+takeLeave|Carol|02-Mar-2023|02-Mar-2023
 
-createProject|P001|25-Feb-2023|15
-createProject|P702|1-Mar-2023|30
-createProject|P103|27-Feb-2023|10
-createProject|P004|28-Feb-2023|1
+listLeaves|Bob
+listLeaves|Carol
+listLeaves
+listEmployees
 
-assign
-assign|P103
-assign|P103|X Troop
-listProjects
+startNewDay|01-Feb-2023
+listLeaves|Bob
+listLeaves|Carol
+listLeaves
+listEmployees
 
-assign|P564|X Troop
-assign|P004|X Gang
-assign|P004|X Troop
-listProjects
+startNewDay|08-Feb-2023
+listLeaves|Bob
+listLeaves|Carol
+listLeaves
+listEmployees
+
+startNewDay|01-Apr-2023
+listLeaves|Bob
+listLeaves|Carol
+listLeaves
+
+listEmployees

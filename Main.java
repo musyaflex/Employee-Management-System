@@ -54,7 +54,11 @@ public class Main {
 				else if (cmdParts[0].equals("listProjects"))
 					(new CmdListProjects()).execute(cmdParts);
 				else if (cmdParts[0].equals("listTeamMembers"))
-					(new CmdListProjects()).execute(cmdParts);
+					(new CmdListTeamMembers()).execute(cmdParts);
+				else if (cmdParts[0].equals("takeLeave"))
+					(new CmdTakeLeave()).execute(cmdParts);
+				else if (cmdParts[0].equals("listLeaves"))
+					(new CmdListLeaves()).execute(cmdParts);
 				else if (cmdParts[0].equals("undo"))
 					RecordedCommand.undoOneCommand();
 				else if (cmdParts[0].equals("redo"))

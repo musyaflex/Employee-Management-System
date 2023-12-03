@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Team implements Comparable<Team>{
     private String teamName;
@@ -57,6 +58,7 @@ public class Team implements Comparable<Team>{
 
     public void addMember(Employee e){
         members.add(e);
+        Collections.sort(members);
     }
 
     public void removeMember (Employee e){
@@ -64,10 +66,10 @@ public class Team implements Comparable<Team>{
     }
 
     public void listMembers(){
-        System.out.printf("%-10s%-10s%-13s\n", "Role", "Name", "Current / Coming leaves" );
-        System.out.printf("%-10s%-10s%-13s\n", "Leader", head.getName(), "--" );
+        System.out.printf("%-10s%-10s%-13s\n", "Role", "Name", "Current / coming leaves" );
+        System.out.printf("%-10s%-10s%-13s\n", "Leader", head.getName(), head.getListOfLeaves() );
         for(Employee e: members){
-            System.out.printf("%-10s%-10s%-13s\n", "Member", e.getName(), "--" );
+            System.out.printf("%-10s%-10s%-13s\n", "Member", e.getName(), e.getListOfLeaves());
         }
     }
 

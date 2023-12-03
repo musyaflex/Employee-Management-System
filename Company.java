@@ -82,7 +82,12 @@ public class Company {
     //     return t; //Why return?  Ans: Later you'll find it useful for undoable comments.
     // }
 
-    public void joinTeam(Team t, Employee e){
+    public void joinTeam(Team t, Employee e) throws ExEmployeeAlreadyInTeam {
+        for(Team team: allTeams){
+            if(team.isMember(e)){
+                throw new ExEmployeeAlreadyInTeam(team, e);
+            }
+        }
         t.addMember(e);
     }
 
@@ -134,5 +139,11 @@ public class Company {
 
     public void listProjects(){
         Project.list(allProjects);
+    }
+
+    public void listLeaves(){
+        for(Employee e: allEmployees){
+            e.listLeaves();
+        }
     }
 }

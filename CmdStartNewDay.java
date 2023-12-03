@@ -1,6 +1,6 @@
 public class CmdStartNewDay extends RecordedCommand{
-    SystemDate datePrev;
-    SystemDate date;
+    private SystemDate datePrev;
+    private SystemDate date;
     @Override
 	public void execute(String[] cmdParts)
 	{
@@ -17,17 +17,17 @@ public class CmdStartNewDay extends RecordedCommand{
                         System.out.println(e.getMessage());
                 }
 	}
-    @Override
+        @Override
 	public void undoMe()
 	{
-        SystemDate.setInstance(datePrev);
-        addRedoCommand(this);
+                SystemDate.setInstance(datePrev);
+                addRedoCommand(this);
 	}
 	
-	@Override
+        @Override
 	public void redoMe()
 	{
-        SystemDate.setInstance(date);
-        addUndoCommand(this);
+                SystemDate.setInstance(date);
+                addUndoCommand(this);
 	}
 }

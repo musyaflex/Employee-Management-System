@@ -5,7 +5,6 @@ public class CmdListProjects extends RecordedCommand{
 	{
         Company company = Company.getInstance();
         company.listProjects();
-
 	}
     @Override
 	public void undoMe()

@@ -10,8 +10,8 @@ public class CmdJoinTeam extends RecordedCommand{
             String name = cmdParts[1];
             String teamName = cmdParts[2];
             Company company = Company.getInstance();
-            Employee e = company.searchEmployee(name);
-            Team t = company.searchTeam(teamName);
+            e = company.searchEmployee(name);
+            t = company.searchTeam(teamName);
             company.joinTeam(t, e);
             addUndoCommand(this);
             clearRedoList();
@@ -19,6 +19,8 @@ public class CmdJoinTeam extends RecordedCommand{
         } catch(ExEmployeeNotFound e){
 			System.out.println(e.getMessage());
 		} catch(ExTeamNotFound e){
+			System.out.println(e.getMessage());
+		} catch(ExEmployeeAlreadyInTeam e){
 			System.out.println(e.getMessage());
 		} catch(ExInsufficientArguments e){
 			System.out.println(e.getMessage());
@@ -36,10 +38,15 @@ public class CmdJoinTeam extends RecordedCommand{
 	
 	@Override
 	public void redoMe()
-	{
-		Company company = Company.getInstance();
-        company.joinTeam(t, e);
-		addUndoCommand(this); //<====== upon redo, we should keep a copy in the undo list
+	{   
+        try{
+            Company company = Company.getInstance();
+            company.joinTeam(t, e);
+		    addUndoCommand(this); //<====== upon redo, we should keep a copy in the undo list
+        } catch(ExEmployeeAlreadyInTeam e){
+            System.out.println(e.getMessage());
+        }
+		
 	}
 }
 
