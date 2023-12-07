@@ -18,8 +18,10 @@ public class Employee implements Comparable<Employee>{
         SystemDate systemDate = SystemDate.getInstance();
         int year = systemDate.getYear();
         Day firstDayOfCurrentYear = new Day(year, 1, 1);
+        Day lastDayOfCurrentYear = new Day(year, 12, 31);
+
         for(DatesPair pair: leaves){
-            if(year == pair.getEnd().getYear()){
+            if(pair.getEnd().getYear() == year){
                 if(pair.getStart().compareTo(firstDayOfCurrentYear) < 0){
                     leavesLeft -= Day.getPeriod(firstDayOfCurrentYear, pair.getEnd());
                 }
@@ -27,24 +29,24 @@ public class Employee implements Comparable<Employee>{
                     leavesLeft -= Day.getPeriod(pair.getStart(), pair.getEnd());
                 }
             }
-        }
-        return leavesLeft;
-    }
-    public int getAnnualLeavesLeft(int year){
-        int leavesLeft = annualLeaves;
-        Day firstDayOfYear = new Day(year, 1, 1);
-        for(DatesPair pair: leaves){
-            if(year == pair.getEnd().getYear()){
-                if(pair.getStart().compareTo(firstDayOfYear) > 0){
-                    leavesLeft -= Day.getPeriod(firstDayOfYear, pair.getEnd());
-                }
-                else{
-                        leavesLeft -= Day.getPeriod(pair.getStart(), pair.getEnd());
-                }
+            else if(pair.getStart().getYear() == year){
+                leavesLeft -= Day.getPeriod(pair.getStart(), lastDayOfCurrentYear);
             }
         }
+
+        // for(DatesPair pair: leaves){
+        //     if(year == pair.getEnd().getYear()){
+        //         if(pair.getStart().compareTo(firstDayOfCurrentYear) < 0){
+        //             leavesLeft -= Day.getPeriod(firstDayOfCurrentYear, pair.getEnd());
+        //         }
+        //         else{
+        //             leavesLeft -= Day.getPeriod(pair.getStart(), pair.getEnd());
+        //         }
+        //     }
+        // }
         return leavesLeft;
     }
+
     public static Employee searchEmployee(ArrayList<Employee> list, String nameToSearch){
         for(Employee emp: list){
             if(emp.getName().equals(nameToSearch)){
@@ -80,11 +82,11 @@ public class Employee implements Comparable<Employee>{
     }
 
     public void deleteLeave(Day startDate, Day endDate) {
-        int leavePeriod = Day.getPeriod(startDate, endDate);
+        // int leavePeriod = Day.getPeriod(startDate, endDate);
         for(DatesPair pair: leaves){
             if(pair.getStart() == startDate && pair.getEnd() == endDate){
                 leaves.remove(pair);
-                annualLeaves += leavePeriod;
+                // annualLeaves += leavePeriod;
                 break;
             }
         }

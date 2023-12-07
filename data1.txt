@@ -1,34 +1,62 @@
-startNewDay|01-Jan-2023
+startNewDay|11-Feb-2023
 
-hire|Bob|30
-hire|Carol|20
+hire|Angel|14
+hire|Brian|16
+hire|Carol|21
 
+hire|Dickson|21
+hire|Emily|14
+
+setupTeam|X Troop|Angel 
+setupTeam|Spider Gang|Carol
+setupTeam|Team 007|Brian
+
+takeLeave|Brian|02-Apr-2023|08-Apr-2023
+takeLeave|Brian|06-Apr-2023|09-Apr-2023
+takeLeave|Brian|01-Apr-2023|03-Apr-2023
+takeLeave|Brian|01-Apr-2023|09-Apr-2023
+takeLeave|Brian|03-Apr-2023|07-Apr-2023
+takeLeave|Brian|03-Mar-2023|07-Mar-2023
+
+joinTeam|Dickson|X Troop
+joinTeam|Emily|Spider Gang
+joinTeam|Dickson|Spider Gang
+joinTeam|Brian|Spider Gang
+
+listTeams
 listEmployees
-
-takeLeave|Bob|02-Feb-2023|08-Feb-2023
-takeLeave|Carol|03-Jan-2023|08-Jan-2023
-takeLeave|Carol|02-Mar-2023|02-Mar-2023
-
-listLeaves|Bob
-listLeaves|Carol
 listLeaves
-listEmployees
+listTeamMembers|X Troop
+listTeamMembers|Spider Gang
+listTeamMembers|Team 007
 
-startNewDay|01-Feb-2023
-listLeaves|Bob
-listLeaves|Carol
+undo
+undo
+undo
+undo
+undo
+undo
+undo
+undo
+undo
+undo
+undo
+undo
+undo
+redo
+redo
+redo
+redo
+redo
+redo
+redo
+redo
 listLeaves
-listEmployees
-
-startNewDay|08-Feb-2023
-listLeaves|Bob
-listLeaves|Carol
+redo
+startNewDay|01-Mar-2023
+takeLeave|Brian|21-Apr-2023|30-Apr-2023
+takeLeave|Brian|21-Apr-2023|29-Apr-2023
 listLeaves
-listEmployees
-
-startNewDay|01-Apr-2023
-listLeaves|Bob
-listLeaves|Carol
-listLeaves
-
-listEmployees
+listTeamMembers|X Troop
+listTeamMembers|Spider Gang
+listTeamMembers|Team 007
