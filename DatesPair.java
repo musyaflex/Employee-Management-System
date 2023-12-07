@@ -12,4 +12,8 @@ public class DatesPair implements Comparable<DatesPair>{
     public Day getStart(){return startDate;}
 
     public Day getEnd(){return endDate;}
+
+    public String toString(){
+        return startDate + " to " + endDate;
+    }
 }

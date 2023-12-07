@@ -17,10 +17,12 @@ public class CmdTakeLeave extends RecordedCommand {
                 e.takeLeave(startDate, endDate);
                 addUndoCommand(this);
                 clearRedoList();
-                System.out.printf("Done. %s's remaining annual leave: %d days\n", e.getName(), e.getAnnualLeavesLeft());
+                System.out.printf("Done.  %s's remaining annual leave: %d days\n", e.getName(), e.getAnnualLeavesLeft());
             } catch(ExEmployeeNotFound e){
                 System.out.println(e.getMessage());
             } catch(ExInsufficientLeavesLeft e){
+                System.out.println(e.getMessage());
+            } catch(ExProjectInFinalStage e){
                 System.out.println(e.getMessage());
             } catch(ExLeavePeriodOverlap e){
                 System.out.println(e.getMessage());
@@ -44,9 +46,10 @@ public class CmdTakeLeave extends RecordedCommand {
             addUndoCommand(this);
         } catch(ExInsufficientLeavesLeft e){
             System.out.println(e.getMessage());
+        } catch(ExProjectInFinalStage e){
+            System.out.println(e.getMessage());
         } catch(ExLeavePeriodOverlap e){
             System.out.println(e.getMessage());
-        } 
-                
+        }   
 	}
 }

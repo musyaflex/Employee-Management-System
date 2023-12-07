@@ -5,13 +5,21 @@ public class Employee implements Comparable<Employee>{
     private String name;
     private int annualLeaves;
     private ArrayList<DatesPair> leaves;
+    private Team team;
 
     public Employee(String n, int y){
         name = n;
         annualLeaves = y;
         leaves = new ArrayList<>();
+        team = null;
     }
     public String getName(){ return name;}
+    public Team getTeam(){return team;}
+    public boolean isInTeam(){
+        if(team == null) return true;
+        return false;
+    }
+
     public int getAnnualLeaves(){return annualLeaves;}
     public int getAnnualLeavesLeft(){
         int leavesLeft = annualLeaves;
@@ -65,10 +73,14 @@ public class Employee implements Comparable<Employee>{
         }
     }
     
-    public void takeLeave(Day startDate, Day endDate) throws ExInsufficientLeavesLeft, ExLeavePeriodOverlap{
+    public void takeLeave(Day startDate, Day endDate) throws ExInsufficientLeavesLeft, ExLeavePeriodOverlap, ExProjectInFinalStage{
         int leavePeriod = Day.getPeriod(startDate, endDate);
         DatesPair newLeave = new DatesPair(startDate, endDate);
         int leavesLeft = getAnnualLeavesLeft();
+
+        if(team != null && team.getConflictingProject(newLeave) != null){
+            throw new ExProjectInFinalStage(team.getConflictingProject(newLeave));
+        }
         if(leavePeriod > leavesLeft){
             throw new ExInsufficientLeavesLeft(leavesLeft);
         }
@@ -82,11 +94,9 @@ public class Employee implements Comparable<Employee>{
     }
 
     public void deleteLeave(Day startDate, Day endDate) {
-        // int leavePeriod = Day.getPeriod(startDate, endDate);
         for(DatesPair pair: leaves){
             if(pair.getStart() == startDate && pair.getEnd() == endDate){
                 leaves.remove(pair);
-                // annualLeaves += leavePeriod;
                 break;
             }
         }
@@ -152,6 +162,14 @@ public class Employee implements Comparable<Employee>{
             res = res.substring(1, res.length() - 1);
         }
         return res;
+    }
+
+    public void setTeam(Team t){
+        team = t;
+    }
+
+    public void unsetTeam(){
+        team = null;
     }
 }
  

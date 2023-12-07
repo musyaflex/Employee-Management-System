@@ -106,6 +106,31 @@ public class Day implements Cloneable, Comparable<Day>{
 		return null;
 	}
 
+	public Day takePreviousDay(){
+		int year = this.getYear();
+		int month = this.getMonth();
+		int day = this.getDay();
+		if(Day.valid(year, month, day - 1)){
+			return new Day(year, month, day - 1);
+		}
+		else if(Day.valid(year, month - 1, 31)){
+			return new Day(year, month - 1, 31);
+		}
+		else if(Day.valid(year, month - 1, 30)){
+			return new Day(year, month - 1, 30);
+		}
+		else if(Day.valid(year, month - 1, 29)){
+			return new Day(year, month - 1, 29);
+		}
+		else if(Day.valid(year, month - 1, 28)){
+			return new Day(year, month - 1, 28);
+		}
+		else if(Day.valid(year - 1, 12, 31)){
+			return new Day(year - 1, 12, 31);
+		}
+		return null;
+	}
+
 	public static Day calculateDay(Day startDay, int period){
 		for(int i = 1; i < period; i++){
 			startDay = startDay.takeNextDay();
@@ -113,6 +138,12 @@ public class Day implements Cloneable, Comparable<Day>{
 		return startDay;
 	}
 
+	public static Day calculateDayReverse(Day endDay, int period){
+		for(int i = 1; i < period; i++){
+			endDay = endDay.takePreviousDay();
+		}
+		return endDay;
+	}
 	public static int getPeriod(Day startDay, Day endDay){
 		int period = 1;
 		while(startDay.compareTo(endDay) != 0){

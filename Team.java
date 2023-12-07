@@ -32,6 +32,15 @@ public class Team implements Comparable<Team>{
     public Employee getHead(){
         return head;
     }
+    public Project getConflictingProject(DatesPair leave){
+        for(Project p: projects){
+            DatesPair finalStage = p.getFinalStage();
+            if(Day.overlap(finalStage, leave)){
+                return p;
+            }
+        }
+        return null;
+    }
     public boolean isMember(Employee e){
         String name = e.getName();
         if(name.equals(head.getName()))

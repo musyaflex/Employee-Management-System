@@ -40,6 +40,14 @@ public class Project implements Comparable<Project>{
     public Team getTeam(){
         return team;
     }
+    public DatesPair getFinalStage(){
+        Day endD = endDay.clone();
+        Day finalStageStartDay = Day.calculateDayReverse(endD, 5);
+        if(startDay.compareTo(finalStageStartDay) > 0){
+            finalStageStartDay = startDay;
+        }
+        return new DatesPair(finalStageStartDay, endD);
+    }
     public static void list(ArrayList<Project> projects){
         System.out.printf("%-9s%-13s%-13s%-13s\n", "Project", "Start Day", "End Day", "Team");
         for (Project project: projects){

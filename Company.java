@@ -67,9 +67,11 @@ public class Company {
             }
         }
         allTeams.add(t);
+        t.getHead().setTeam(t);
         Collections.sort(allTeams);
     }
     public void removeTeam(Team t){
+        t.getHead().unsetTeam();
         allTeams.remove(t);
         Collections.sort(allTeams);
     }
@@ -88,11 +90,13 @@ public class Company {
                 throw new ExEmployeeAlreadyInTeam(team, e);
             }
         }
+        e.setTeam(t);
         t.addMember(e);
     }
 
     public void removeMemberFromTeam(Employee e, Team t){
         t.removeMember(e);
+        e.unsetTeam();
     }
 
     public void listTeamMembers(Team t){
