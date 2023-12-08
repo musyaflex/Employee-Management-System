@@ -9,9 +9,9 @@ public class CmdListTeamMembers extends RecordedCommand {
             Company company = Company.getInstance();
             Team t = company.searchTeam(teamName);
             company.listTeamMembers(t);
-        } catch(ExTeamNotFound e){
+        } catch(ExTeamNotFound e) {
             System.out.println(e.getMessage());
-        } catch(ExInsufficientArguments e){
+        } catch(ExInsufficientArguments e) {
             System.out.println(e.getMessage());
         }
 	}

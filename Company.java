@@ -7,62 +7,74 @@ public class Company {
     private ArrayList<Project> allProjects;
     private static Company instance = new Company();    
 
-    private Company(){
+    private Company() {
         allEmployees = new ArrayList<Employee>();
         allTeams = new ArrayList<Team>();
         allProjects = new ArrayList<Project>();
     }
-    public static Company getInstance(){
+    
+    // Returns the instance of the Company class
+    public static Company getInstance() {
         return instance;
     }
+    
+    // Lists all the teams in the company
     public void listTeams() {
         Team.list(allTeams);
     }
-    public void listEmployees(){
+    
+    // Lists all the employees in the company
+    public void listEmployees() {
         Employee.list(allEmployees);
     }
+    
+    // Searches for an employee by name and returns the Employee object if found
+    // Throws an ExEmployeeNotFound exception if the employee is not found
     public Employee searchEmployee(String name) throws ExEmployeeNotFound{
         Employee e = Employee.searchEmployee(allEmployees, name);
         if (e != null) {
             return e;
         }
         throw new ExEmployeeNotFound();
-        
     }
+    
+    // Searches for a team by name and returns the Team object if found
+    // Throws an ExTeamNotFound exception if the team is not found
     public Team searchTeam (String teamName) throws ExTeamNotFound {
         Team t = Team.searchTeam(allTeams, teamName);
-        if (t != null){
+        if (t != null) {
             return t;
         }
         throw new ExTeamNotFound();
     }
-    // public Employee createEmployee(String name, int l) // See how it is called in main()
-    // {
-    //     Employee e = new Employee(name, l);
-    //     allEmployees.add(e);
-    //     Collections.sort(allEmployees); //allEmployees
-    //     return e;
-    // }
+    
+    // Adds an employee to the company
+    // Throws an ExEmployeeAlreadyExists exception if an employee with the same name already exists
     public void addEmployee(Employee e) throws ExEmployeeAlreadyExists{
-        for(Employee emp: allEmployees){
-            if (emp.getName().equals(e.getName())){
+        for (Employee emp: allEmployees) {
+            if (emp.getName().equals(e.getName())) {
                 throw new ExEmployeeAlreadyExists();
             }
         }
         allEmployees.add(e);
         Collections.sort(allEmployees);
-        
     }
-    public void removeEmployee(Employee e){
+    
+    // Removes an employee from the company
+    public void removeEmployee(Employee e) {
         allEmployees.remove(e);
         Collections.sort(allEmployees);
     }
+    
+    // Adds a team to the company
+    // Throws an ExTeamAlreadyExists exception if a team with the same name already exists
+    // Throws an ExEmployeeAlreadyInTeam exception if the team's head is already a member of another team
     public void addTeam(Team t) throws ExTeamAlreadyExists, ExEmployeeAlreadyInTeam {
-        for(Team team: allTeams){
-            if (team.getName().equals(t.getName())){
+        for (Team team: allTeams) {
+            if (team.getName().equals(t.getName())) {
                 throw new ExTeamAlreadyExists();
             }
-            if (team.isMember(t.getHead())){
+            if (team.isMember(t.getHead())) {
                 throw new ExEmployeeAlreadyInTeam(team, t.getHead());
             }
         }
@@ -70,23 +82,19 @@ public class Company {
         t.getHead().setTeam(t);
         Collections.sort(allTeams);
     }
-    public void removeTeam(Team t){
+    
+    // Removes a team from the company
+    public void removeTeam(Team t) {
         t.getHead().unsetTeam();
         allTeams.remove(t);
         Collections.sort(allTeams);
     }
-    // public Team createTeam(String g, String name) // See how it is called in main()
-    // {
-    //     Employee e = Employee.searchEmployee(allEmployees, name);
-    //     Team t = new Team(g, e);
-    //     allTeams.add(t);
-    //     Collections.sort(allTeams); //allTeams
-    //     return t; //Why return?  Ans: Later you'll find it useful for undoable comments.
-    // }
 
+    // Assigns an employee to a team
+    // Throws an ExEmployeeAlreadyInTeam exception if the employee is already a member of another team
     public void joinTeam(Team t, Employee e) throws ExEmployeeAlreadyInTeam {
-        for(Team team: allTeams){
-            if (team.isMember(e)){
+        for (Team team: allTeams) {
+            if (team.isMember(e)) {
                 throw new ExEmployeeAlreadyInTeam(team, e);
             }
         }
@@ -94,18 +102,22 @@ public class Company {
         t.addMember(e);
     }
 
-    public void removeMemberFromTeam(Employee e, Team t){
+    // Removes a member from a team
+    public void removeMemberFromTeam(Employee e, Team t) {
         t.removeMember(e);
         e.unsetTeam();
     }
 
-    public void listTeamMembers(Team t){
+    // Lists all the members of a team
+    public void listTeamMembers(Team t) {
         t.listMembers();
     }
 
-    public void addProject(Project p) throws ExProjectAlreadyExists{
-        for(Project project: allProjects){
-            if (project.getCode().equals(p.getCode())){
+    // Adds a project to the company
+    // Throws an ExProjectAlreadyExists exception if a project with the same code already exists
+    public void addProject(Project p) throws ExProjectAlreadyExists {
+        for (Project project: allProjects) {
+            if (project.getCode().equals(p.getCode())) {
                 throw new ExProjectAlreadyExists();
             }
         }
@@ -113,12 +125,15 @@ public class Company {
         Collections.sort(allProjects);
     }
 
-    public void removeProject(Project p){
+    // Removes a project from the company
+    public void removeProject(Project p) {
         allProjects.remove(p);
         Collections.sort(allProjects);
     }
     
-    public Project searchProject (String projectCode) throws ExProjectNotFound{
+    // Searches for a project by code and returns the Project object if found
+    // Throws an ExProjectNotFound exception if the project is not found
+    public Project searchProject (String projectCode) throws ExProjectNotFound {
         Project p = Project.searchProject(allProjects, projectCode);
         if (p != null) {
             return p;
@@ -126,8 +141,10 @@ public class Company {
         throw new ExProjectNotFound();
     }
 
+    // Assigns a project to a team
+    //Throws an ExProjectAlreadyAssigned exception if the project is already assigned to a team
     public void assignProject(Team t, Project p) throws ExProjectAlreadyAssigned {
-        if (p.getTeam() != null){
+        if (p.getTeam() != null) {
             throw new ExProjectAlreadyAssigned(p.getTeam());
         }
         else{
@@ -136,33 +153,37 @@ public class Company {
         }
     }
 
-    public void unassignProject(Team t, Project p){
+    // Unassigns a project from a team
+    public void unassignProject(Team t, Project p) {
         t.removeProject(p);
         p.unsetTeam();
     }
 
-    public void listProjects(){
+    // Lists all the projects in the company
+    public void listProjects() {
         Project.list(allProjects);
     }
 
-    public void listLeaves(){
-        for(Employee e: allEmployees){
+    // Lists all the leaves taken by employees in the company
+    public void listLeaves() {
+        for (Employee e: allEmployees) {
             e.listLeaves();
         }
     }
 
-    public void suggestTeam(Project p){
+    // Suggests a team for a project based on balancing the loading factor
+    public void suggestTeam(Project p) {
         System.out.printf("During the period of project %s (%s to %s):\n", p.getCode(), p.getStartDay(), p.getEndDay());
         System.out.print("  Average manpower (m) and count of existing projects (p) of each team:\n");
-        for(Team team: allTeams){
+        for (Team team: allTeams) {
             System.out.printf("    %s: m=%.2f workers, p=%.2f projects\n", team.getName(), team.calculateAverageManpower(p), team.calculateAverageProjCount(p));
         }
         System.out.printf("  Projected loading factor when a team takes this project %s:\n", p.getCode());
         double minLf = Double.POSITIVE_INFINITY;
         Team minLfTeam = null;
-        for(Team team: allTeams){
+        for (Team team: allTeams) {
             double lf = team.predictedLF(p);
-            if (lf < minLf){
+            if (lf < minLf) {
                 minLf = lf;
                 minLfTeam = team;
             }

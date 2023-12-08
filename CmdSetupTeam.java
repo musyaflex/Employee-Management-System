@@ -12,13 +12,13 @@ public class CmdSetupTeam extends RecordedCommand {
                         addUndoCommand(this);
                         clearRedoList();
                 System.out.println("Done.");
-                } catch(ExTeamAlreadyExists e){
+                } catch(ExTeamAlreadyExists e) {
                         System.out.println(e.getMessage());
-                } catch(ExEmployeeNotFound e){
+                } catch(ExEmployeeNotFound e) {
                         System.out.println(e.getMessage());
-                } catch(ExEmployeeAlreadyInTeam e){
+                } catch(ExEmployeeAlreadyInTeam e) {
                         System.out.println(e.getMessage());
-                } catch(ExInsufficientArguments e){
+                } catch(ExInsufficientArguments e) {
                         System.out.println(e.getMessage());
                 }      
         }
@@ -37,9 +37,9 @@ public class CmdSetupTeam extends RecordedCommand {
                         Company company = Company.getInstance();
                         company.addTeam(t);
                         addUndoCommand(this);
-                } catch(ExTeamAlreadyExists e){
+                } catch(ExTeamAlreadyExists e) {
                         System.out.println(e.getMessage());
-                } catch(ExEmployeeAlreadyInTeam e){
+                } catch(ExEmployeeAlreadyInTeam e) {
                         System.out.println(e.getMessage());
                 } 
                 

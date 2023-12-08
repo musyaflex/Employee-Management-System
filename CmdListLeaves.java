@@ -3,7 +3,7 @@ public class CmdListLeaves extends RecordedCommand{
 	public void execute(String[] cmdParts)
 	{
         Company company = Company.getInstance();
-        if (cmdParts.length == 1){
+        if (cmdParts.length == 1) {
             company.listLeaves();
         }
         else{
@@ -11,7 +11,7 @@ public class CmdListLeaves extends RecordedCommand{
                 String name = cmdParts[1];
                 Employee e = company.searchEmployee(name);
                 e.listLeaves();
-            } catch(ExEmployeeNotFound e){
+            } catch(ExEmployeeNotFound e) {
                 System.out.println(e.getMessage());
             }
         }

@@ -16,13 +16,13 @@ public class CmdJoinTeam extends RecordedCommand{
             addUndoCommand(this);
             clearRedoList();
             System.out.println("Done.");
-        } catch(ExEmployeeNotFound e){
+        } catch(ExEmployeeNotFound e) {
 			System.out.println(e.getMessage());
-		} catch(ExTeamNotFound e){
+		} catch(ExTeamNotFound e) {
 			System.out.println(e.getMessage());
-		} catch(ExEmployeeAlreadyInTeam e){
+		} catch(ExEmployeeAlreadyInTeam e) {
 			System.out.println(e.getMessage());
-		} catch(ExInsufficientArguments e){
+		} catch(ExInsufficientArguments e) {
 			System.out.println(e.getMessage());
 		}
 
@@ -43,7 +43,7 @@ public class CmdJoinTeam extends RecordedCommand{
             Company company = Company.getInstance();
             company.joinTeam(t, e);
 		    addUndoCommand(this); //<====== upon redo, we should keep a copy in the undo list
-        } catch(ExEmployeeAlreadyInTeam e){
+        } catch(ExEmployeeAlreadyInTeam e) {
             System.out.println(e.getMessage());
         }
 		

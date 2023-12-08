@@ -9,9 +9,9 @@ public class CmdSuggestProjectTeam extends RecordedCommand{
             Company company = Company.getInstance();
             Project p = company.searchProject(cmdParts[1]);
             company.suggestTeam(p);
-        } catch(ExProjectNotFound e){
+        } catch(ExProjectNotFound e) {
 			System.out.println(e.getMessage());
-		} catch(ExInsufficientArguments e){
+		} catch(ExInsufficientArguments e) {
 			System.out.println(e.getMessage());
 		}
 	}

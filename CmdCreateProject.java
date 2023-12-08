@@ -14,11 +14,11 @@ public class CmdCreateProject extends RecordedCommand{
             addUndoCommand(this);
             clearRedoList();
             System.out.println("Done.");
-        } catch(NumberFormatException e){
+        } catch(NumberFormatException e) {
 			System.out.println("Wrong number format for project duration!");
-		} catch(ExProjectAlreadyExists e){
+		} catch(ExProjectAlreadyExists e) {
             System.out.println(e.getMessage());
-        } catch(ExInsufficientArguments e){
+        } catch(ExInsufficientArguments e) {
             System.out.println(e.getMessage());
         }
 	}
@@ -36,7 +36,7 @@ public class CmdCreateProject extends RecordedCommand{
             Company company = Company.getInstance();
             company.addProject(project);
             addUndoCommand(this);
-        } catch(ExProjectAlreadyExists e){
+        } catch(ExProjectAlreadyExists e) {
             System.out.println(e.getMessage());
         }
         

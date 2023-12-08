@@ -16,13 +16,13 @@ public class CmdAssign extends RecordedCommand{
             addUndoCommand(this);
             clearRedoList();
             System.out.println("Done.");
-        } catch(ExTeamNotFound e){
+        } catch(ExTeamNotFound e) {
 			System.out.println(e.getMessage());
-		} catch(ExProjectAlreadyAssigned e){
+		} catch(ExProjectAlreadyAssigned e) {
 			System.out.println(e.getMessage() + e.getTeamName());
-		} catch(ExProjectNotFound e){
+		} catch(ExProjectNotFound e) {
 			System.out.println(e.getMessage());
-		} catch(ExInsufficientArguments e){
+		} catch(ExInsufficientArguments e) {
 			System.out.println(e.getMessage());
 		}
         
@@ -41,7 +41,7 @@ public class CmdAssign extends RecordedCommand{
 			Company company = Company.getInstance();
         	company.assignProject(t, project);
 			addUndoCommand(this); //<====== upon redo, we should keep a copy in the undo list
-		} catch(ExProjectAlreadyAssigned e){
+		} catch(ExProjectAlreadyAssigned e) {
 			System.out.println(e.getMessage() + e.getTeamName());
 		} 
 	}

@@ -13,7 +13,7 @@ public class CmdStartNewDay extends RecordedCommand{
                         addUndoCommand(this);
                         clearRedoList();
                         System.out.println("Done.");
-                } catch(ExInsufficientArguments e){
+                } catch(ExInsufficientArguments e) {
                         System.out.println(e.getMessage());
                 }
 	}

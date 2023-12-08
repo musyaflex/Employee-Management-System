@@ -8,33 +8,34 @@ public class Main {
 		Locale.setDefault(Locale.US);
 		Scanner in = new Scanner(System.in);
 
+		// Prompt user for the file pathname
 		System.out.print("Please input the file pathname: ");
 		String filepathname = in.nextLine();
 		
 		Scanner inFile = null;
-		try{
+		try {
+			// Read the input file
 			inFile = new Scanner(new File(filepathname));
-			//The first command in the file must be to set the system date 
-			//(eg. "startNewDay|01-Jan-2022"); and it cannot be undone
+			
+			// Read the first line of the file to create the SystemDate instance
 			String cmdLine1 = inFile.nextLine();
 			String[] cmdLine1Parts = cmdLine1.split("\\|");
-			System.out.println("\n> "+cmdLine1);
+			System.out.println("\n> " + cmdLine1);
 			SystemDate.createTheInstance(cmdLine1Parts[1]);
 			
-			while (inFile.hasNext())		
-			{
+			// Process each line of the file
+			while (inFile.hasNext()) {
 				String cmdLine = inFile.nextLine().trim();
 				
-				//Blank lines exist in data file as separators.  Skip them.
+				// Blank lines exist in data file as separators. Skip them.
 				if (cmdLine.equals("")) continue;  
 
-				System.out.println("\n> "+cmdLine);
+				System.out.println("\n> " + cmdLine);
 				
-				// split the words in actionLine => create an array of word strings
-				// http://stackoverflow.com/questions/5675704/java-string-split-not-returning-the-right-values
-				// https://community.oracle.com/thread/2084308
+				// Splitting the words in cmdLine => create an array of word strings
 				String[] cmdParts = cmdLine.split("\\|"); 
 				
+				// Execute the appropriate command based on the first word
 				if (cmdParts[0].equals("hire"))
 					(new CmdHire()).execute(cmdParts);
 				else if (cmdParts[0].equals("listEmployees"))
@@ -68,20 +69,18 @@ public class Main {
 				else 
 					throw new ExWrongCommand();
 			}
-		} catch(FileNotFoundException e){
+		} catch (FileNotFoundException e) {
             System.out.println("File not found!");
-        } catch(InputMismatchException e){
+        } catch (InputMismatchException e) {
             System.out.println("File content problem!");
-        } catch(ExWrongCommand e){
+        } catch (ExWrongCommand e) {
             System.out.println("Unknown command - ignored!");
-        } finally{
-            if (inFile!=null) inFile.close();
+        } finally {
+            if (inFile != null) inFile.close();
             in.close();
         }
 		
-		
 		inFile.close();
-			
 		in.close();
 	}
 }

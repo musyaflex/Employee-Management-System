@@ -14,11 +14,11 @@ public class CmdHire extends RecordedCommand{
 			addUndoCommand(this);
 			clearRedoList();
 			System.out.println("Done.");
-		} catch(NumberFormatException e){
+		} catch(NumberFormatException e) {
 			System.out.println("Wrong number format for annual leaves!");
-		} catch(ExEmployeeAlreadyExists e){
+		} catch(ExEmployeeAlreadyExists e) {
 			System.out.println(e.getMessage());
-		} catch(ExInsufficientArguments e){
+		} catch(ExInsufficientArguments e) {
 			System.out.println(e.getMessage());
 		}
         
@@ -37,7 +37,7 @@ public class CmdHire extends RecordedCommand{
 		Company company = Company.getInstance();
         company.addEmployee(e);
 		addUndoCommand(this); //<====== upon redo, we should keep a copy in the undo list
-		} catch(ExEmployeeAlreadyExists e){
+		} catch(ExEmployeeAlreadyExists e) {
 			System.out.println(e.getMessage());
 		}
 	}
