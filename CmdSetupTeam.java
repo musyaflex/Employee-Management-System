@@ -3,7 +3,7 @@ public class CmdSetupTeam extends RecordedCommand {
         @Override
         public void execute(String[] cmdParts)
         {       try{
-                        if(cmdParts.length<3)
+                        if (cmdParts.length<3)
                                 throw new ExInsufficientArguments();
                         Company company = Company.getInstance();
                         Employee e = company.searchEmployee(cmdParts[2]);

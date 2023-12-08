@@ -6,7 +6,7 @@ public class CmdTakeLeave extends RecordedCommand {
     @Override
     public void execute(String[] cmdParts)
     {       try{
-                if(cmdParts.length<4)
+                if (cmdParts.length<4)
                     throw new ExInsufficientArguments();
                 String name = cmdParts[1];
                 startDate = new Day(cmdParts[2]);

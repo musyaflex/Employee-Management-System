@@ -3,7 +3,7 @@ public class CmdCreateProject extends RecordedCommand{
     @Override
 	public void execute(String[] cmdParts)
 	{   try{
-            if(cmdParts.length<4)
+            if (cmdParts.length<4)
                 throw new ExInsufficientArguments();
             String code = cmdParts[1];
             Day startDay = new Day(cmdParts[2]);

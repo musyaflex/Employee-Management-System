@@ -5,7 +5,7 @@ import java.util.*;
 public class Main {
 
 	public static void main(String[] args) throws FileNotFoundException {
-
+		Locale.setDefault(Locale.US);
 		Scanner in = new Scanner(System.in);
 
 		System.out.print("Please input the file pathname: ");
@@ -59,6 +59,8 @@ public class Main {
 					(new CmdTakeLeave()).execute(cmdParts);
 				else if (cmdParts[0].equals("listLeaves"))
 					(new CmdListLeaves()).execute(cmdParts);
+				else if (cmdParts[0].equals("suggestProjectTeam"))
+					(new CmdSuggestProjectTeam()).execute(cmdParts);
 				else if (cmdParts[0].equals("undo"))
 					RecordedCommand.undoOneCommand();
 				else if (cmdParts[0].equals("redo"))
@@ -73,7 +75,7 @@ public class Main {
         } catch(ExWrongCommand e){
             System.out.println("Unknown command - ignored!");
         } finally{
-            if(inFile!=null) inFile.close();
+            if (inFile!=null) inFile.close();
             in.close();
         }
 		

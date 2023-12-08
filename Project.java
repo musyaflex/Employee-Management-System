@@ -18,7 +18,7 @@ public class Project implements Comparable<Project>{
     }
     public static Project searchProject(ArrayList<Project> projects, String projectCode){
         for(Project p: projects){
-            if(p.getCode().equals(projectCode)){
+            if (p.getCode().equals(projectCode)){
                 return p;
             }
         }
@@ -37,13 +37,16 @@ public class Project implements Comparable<Project>{
     public String getTeamInfo(){
         return team.getName() + " (" + team.getMembersStr() + ")";
     }
+    public DatesPair getFullPeriod(){
+        return new DatesPair(startDay, endDay);
+    }
     public Team getTeam(){
         return team;
     }
     public DatesPair getFinalStage(){
         Day endD = endDay.clone();
         Day finalStageStartDay = Day.calculateDayReverse(endD, 5);
-        if(startDay.compareTo(finalStageStartDay) > 0){
+        if (startDay.compareTo(finalStageStartDay) > 0){
             finalStageStartDay = startDay;
         }
         return new DatesPair(finalStageStartDay, endD);
@@ -52,7 +55,7 @@ public class Project implements Comparable<Project>{
         System.out.printf("%-9s%-13s%-13s%-13s\n", "Project", "Start Day", "End Day", "Team");
         for (Project project: projects){
             String teamInfo = "--";
-            if(project.getTeam() != null){
+            if (project.getTeam() != null){
                 teamInfo = project.getTeamInfo();
             }
             System.out.printf( "%-9s%-13s%-13s%-13s\n", project.getCode(), project.getStartDay(), project.getEndDay(), teamInfo); 

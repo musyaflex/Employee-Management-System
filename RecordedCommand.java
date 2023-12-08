@@ -7,13 +7,13 @@ public abstract class RecordedCommand implements Command{
     protected static void addRedoCommand(RecordedCommand cmd) {redoList.add(cmd);}
     protected static void clearRedoList() {redoList.clear();}
     public static void undoOneCommand() {
-        if(undoList.size() > 0){
+        if (undoList.size() > 0){
             RecordedCommand r = undoList.remove(undoList.size() - 1);
             r.undoMe();
         } else System.out.println("Nothing to undo.");
     }  
     public static void redoOneCommand() {
-        if(redoList.size() > 0){
+        if (redoList.size() > 0){
             RecordedCommand r = redoList.remove(redoList.size() - 1);
             r.redoMe();
         }

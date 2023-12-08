@@ -23,7 +23,7 @@ public class Company {
     }
     public Employee searchEmployee(String name) throws ExEmployeeNotFound{
         Employee e = Employee.searchEmployee(allEmployees, name);
-        if(e != null) {
+        if (e != null) {
             return e;
         }
         throw new ExEmployeeNotFound();
@@ -31,7 +31,7 @@ public class Company {
     }
     public Team searchTeam (String teamName) throws ExTeamNotFound {
         Team t = Team.searchTeam(allTeams, teamName);
-        if(t != null){
+        if (t != null){
             return t;
         }
         throw new ExTeamNotFound();
@@ -45,7 +45,7 @@ public class Company {
     // }
     public void addEmployee(Employee e) throws ExEmployeeAlreadyExists{
         for(Employee emp: allEmployees){
-            if(emp.getName().equals(e.getName())){
+            if (emp.getName().equals(e.getName())){
                 throw new ExEmployeeAlreadyExists();
             }
         }
@@ -59,10 +59,10 @@ public class Company {
     }
     public void addTeam(Team t) throws ExTeamAlreadyExists, ExEmployeeAlreadyInTeam {
         for(Team team: allTeams){
-            if(team.getName().equals(t.getName())){
+            if (team.getName().equals(t.getName())){
                 throw new ExTeamAlreadyExists();
             }
-            if(team.isMember(t.getHead())){
+            if (team.isMember(t.getHead())){
                 throw new ExEmployeeAlreadyInTeam(team, t.getHead());
             }
         }
@@ -86,7 +86,7 @@ public class Company {
 
     public void joinTeam(Team t, Employee e) throws ExEmployeeAlreadyInTeam {
         for(Team team: allTeams){
-            if(team.isMember(e)){
+            if (team.isMember(e)){
                 throw new ExEmployeeAlreadyInTeam(team, e);
             }
         }
@@ -105,7 +105,7 @@ public class Company {
 
     public void addProject(Project p) throws ExProjectAlreadyExists{
         for(Project project: allProjects){
-            if(project.getCode().equals(p.getCode())){
+            if (project.getCode().equals(p.getCode())){
                 throw new ExProjectAlreadyExists();
             }
         }
@@ -120,14 +120,14 @@ public class Company {
     
     public Project searchProject (String projectCode) throws ExProjectNotFound{
         Project p = Project.searchProject(allProjects, projectCode);
-        if(p != null) {
+        if (p != null) {
             return p;
         }
         throw new ExProjectNotFound();
     }
 
     public void assignProject(Team t, Project p) throws ExProjectAlreadyAssigned {
-        if(p.getTeam() != null){
+        if (p.getTeam() != null){
             throw new ExProjectAlreadyAssigned(p.getTeam());
         }
         else{
@@ -149,5 +149,25 @@ public class Company {
         for(Employee e: allEmployees){
             e.listLeaves();
         }
+    }
+
+    public void suggestTeam(Project p){
+        System.out.printf("During the period of project %s (%s to %s):\n", p.getCode(), p.getStartDay(), p.getEndDay());
+        System.out.print("  Average manpower (m) and count of existing projects (p) of each team:\n");
+        for(Team team: allTeams){
+            System.out.printf("    %s: m=%.2f workers, p=%.2f projects\n", team.getName(), team.calculateAverageManpower(p), team.calculateAverageProjCount(p));
+        }
+        System.out.printf("  Projected loading factor when a team takes this project %s:\n", p.getCode());
+        double minLf = Double.POSITIVE_INFINITY;
+        Team minLfTeam = null;
+        for(Team team: allTeams){
+            double lf = team.predictedLF(p);
+            if (lf < minLf){
+                minLf = lf;
+                minLfTeam = team;
+            }
+            System.out.printf("    %s: (p+1)/m = %.2f\n", team.getName(), lf);
+        }
+        System.out.printf("Conclusion: %s should be assigned to %s for best balancing of loading\n", p.getCode(), minLfTeam.getName());
     }
 }

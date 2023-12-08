@@ -83,9 +83,9 @@ public class Day implements Cloneable, Comparable<Day>{
 		String monthString = Integer.toString(month);
 		String dayString = Integer.toString(day);
 		
-		if(day < 10) 
+		if (day < 10) 
 			dayString = "0"+dayString;
-		if(month < 10) 
+		if (month < 10) 
 			monthString = "0"+monthString;
 		
 		return year+monthString+dayString;		
@@ -94,13 +94,13 @@ public class Day implements Cloneable, Comparable<Day>{
 		int year = this.getYear();
 		int month = this.getMonth();
 		int day = this.getDay();
-		if(Day.valid(year, month, day+1)){
+		if (Day.valid(year, month, day+1)){
 			return new Day(year, month, day + 1);
 		}
-		else if(Day.valid(year, month + 1, 1)){
+		else if (Day.valid(year, month + 1, 1)){
 			return new Day(year, month + 1, 1);
 		}
-		else if(Day.valid(year + 1, 1, 1)){
+		else if (Day.valid(year + 1, 1, 1)){
 			return new Day(year + 1, 1, 1);
 		}
 		return null;
@@ -110,22 +110,22 @@ public class Day implements Cloneable, Comparable<Day>{
 		int year = this.getYear();
 		int month = this.getMonth();
 		int day = this.getDay();
-		if(Day.valid(year, month, day - 1)){
+		if (Day.valid(year, month, day - 1)){
 			return new Day(year, month, day - 1);
 		}
-		else if(Day.valid(year, month - 1, 31)){
+		else if (Day.valid(year, month - 1, 31)){
 			return new Day(year, month - 1, 31);
 		}
-		else if(Day.valid(year, month - 1, 30)){
+		else if (Day.valid(year, month - 1, 30)){
 			return new Day(year, month - 1, 30);
 		}
-		else if(Day.valid(year, month - 1, 29)){
+		else if (Day.valid(year, month - 1, 29)){
 			return new Day(year, month - 1, 29);
 		}
-		else if(Day.valid(year, month - 1, 28)){
+		else if (Day.valid(year, month - 1, 28)){
 			return new Day(year, month - 1, 28);
 		}
-		else if(Day.valid(year - 1, 12, 31)){
+		else if (Day.valid(year - 1, 12, 31)){
 			return new Day(year - 1, 12, 31);
 		}
 		return null;
@@ -158,22 +158,40 @@ public class Day implements Cloneable, Comparable<Day>{
 		Day startDate2 = daysPair2.getStart();
 		Day endDate1 = daysPair1.getEnd();
 		Day endDate2 = daysPair2.getEnd();
-		if(startDate1.isBetween(startDate2, endDate2)){
+		if (startDate1.isBetween(startDate2, endDate2)){
 			return true;
 		}
-		else if(startDate2.isBetween(startDate1, endDate1)){
+		else if (startDate2.isBetween(startDate1, endDate1)){
 			return true;
 		}
-		else if(endDate1.isBetween(startDate2, endDate2)){
+		else if (endDate1.isBetween(startDate2, endDate2)){
 			return true;
 		}
-		else if(endDate2.isBetween(startDate1, endDate1)){
+		else if (endDate2.isBetween(startDate1, endDate1)){
 			return true;
 		}
 		return false;
 	}
+	public static int getOverlapPeriod(DatesPair daysPair1, DatesPair daysPair2){
+		int res = 0;
+		Day startDate1 = daysPair1.getStart().clone();
+		Day startDate2 = daysPair2.getStart();
+		Day endDate1 = daysPair1.getEnd();
+		Day endDate2 = daysPair2.getEnd();
+		
+		while(startDate1.compareTo(endDate1) != 0){
+			if (startDate1.isBetween(startDate2, endDate2)){
+				res++;
+			}
+			startDate1 = startDate1.takeNextDay();
+		}
+		if (startDate1.isBetween(startDate2, endDate2)){
+			res++;
+		}
+		return res;
+	}
 	public boolean isBetween(Day start, Day end){
-		if(this.compareTo(start) >= 0 && this.compareTo(end) <= 0){
+		if (this.compareTo(start) >= 0 && this.compareTo(end) <= 0){
 			return true;
 		}
 		return false;

@@ -5,7 +5,7 @@ public class CmdJoinTeam extends RecordedCommand{
     @Override
 	public void execute(String[] cmdParts)
 	{   try{
-            if(cmdParts.length<3)
+            if (cmdParts.length<3)
                 throw new ExInsufficientArguments();
             String name = cmdParts[1];
             String teamName = cmdParts[2];

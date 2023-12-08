@@ -16,7 +16,7 @@ public class Employee implements Comparable<Employee>{
     public String getName(){ return name;}
     public Team getTeam(){return team;}
     public boolean isInTeam(){
-        if(team == null) return true;
+        if (team == null) return true;
         return false;
     }
 
@@ -29,22 +29,22 @@ public class Employee implements Comparable<Employee>{
         Day lastDayOfCurrentYear = new Day(year, 12, 31);
 
         for(DatesPair pair: leaves){
-            if(pair.getEnd().getYear() == year){
-                if(pair.getStart().compareTo(firstDayOfCurrentYear) < 0){
+            if (pair.getEnd().getYear() == year){
+                if (pair.getStart().compareTo(firstDayOfCurrentYear) < 0){
                     leavesLeft -= Day.getPeriod(firstDayOfCurrentYear, pair.getEnd());
                 }
                 else{
                     leavesLeft -= Day.getPeriod(pair.getStart(), pair.getEnd());
                 }
             }
-            else if(pair.getStart().getYear() == year){
+            else if (pair.getStart().getYear() == year){
                 leavesLeft -= Day.getPeriod(pair.getStart(), lastDayOfCurrentYear);
             }
         }
 
         // for(DatesPair pair: leaves){
-        //     if(year == pair.getEnd().getYear()){
-        //         if(pair.getStart().compareTo(firstDayOfCurrentYear) < 0){
+        //     if (year == pair.getEnd().getYear()){
+        //         if (pair.getStart().compareTo(firstDayOfCurrentYear) < 0){
         //             leavesLeft -= Day.getPeriod(firstDayOfCurrentYear, pair.getEnd());
         //         }
         //         else{
@@ -57,7 +57,7 @@ public class Employee implements Comparable<Employee>{
 
     public static Employee searchEmployee(ArrayList<Employee> list, String nameToSearch){
         for(Employee emp: list){
-            if(emp.getName().equals(nameToSearch)){
+            if (emp.getName().equals(nameToSearch)){
                 return emp;
             }
         }
@@ -78,14 +78,14 @@ public class Employee implements Comparable<Employee>{
         DatesPair newLeave = new DatesPair(startDate, endDate);
         int leavesLeft = getAnnualLeavesLeft();
 
-        if(team != null && team.getConflictingProject(newLeave) != null){
+        if (team != null && team.getConflictingProject(newLeave) != null){
             throw new ExProjectInFinalStage(team.getConflictingProject(newLeave));
         }
-        if(leavePeriod > leavesLeft){
+        if (leavePeriod > leavesLeft){
             throw new ExInsufficientLeavesLeft(leavesLeft);
         }
         for(DatesPair pair: leaves){
-            if(Day.overlap(pair, newLeave)){
+            if (Day.overlap(pair, newLeave)){
                 throw new ExLeavePeriodOverlap(pair.getStart(), pair.getEnd());
             }
         }
@@ -95,7 +95,7 @@ public class Employee implements Comparable<Employee>{
 
     public void deleteLeave(Day startDate, Day endDate) {
         for(DatesPair pair: leaves){
-            if(pair.getStart() == startDate && pair.getEnd() == endDate){
+            if (pair.getStart() == startDate && pair.getEnd() == endDate){
                 leaves.remove(pair);
                 break;
             }
@@ -106,22 +106,22 @@ public class Employee implements Comparable<Employee>{
         int year = systemDate.getYear();
         int numOfleavesThisYear = 0;
         for(DatesPair pair: leaves){
-            if(pair.getEnd().getYear() == year || pair.getStart().getYear() == year){
-                if((pair.getEnd()).compareTo(systemDate) >= 0){
+            if (pair.getEnd().getYear() == year || pair.getStart().getYear() == year){
+                if ((pair.getEnd()).compareTo(systemDate) >= 0){
                     numOfleavesThisYear++;
                 }
             }
         }
-        if(numOfleavesThisYear == 0){
+        if (numOfleavesThisYear == 0){
             System.out.println(this.getName() + ": --");
         }
         else{
             System.out.print(this.getName() + ": ");
             int count = 1;
             for(DatesPair pair: leaves){
-                if(pair.getEnd().getYear() == year || pair.getStart().getYear() == year){
-                    if((pair.getEnd()).compareTo(systemDate) >= 0){
-                        if(count == numOfleavesThisYear){
+                if (pair.getEnd().getYear() == year || pair.getStart().getYear() == year){
+                    if ((pair.getEnd()).compareTo(systemDate) >= 0){
+                        if (count == numOfleavesThisYear){
                             System.out.printf("%s to %s\n", pair.getStart(), pair.getEnd());
                             break;
                         }
@@ -142,19 +142,19 @@ public class Employee implements Comparable<Employee>{
         int year = systemDate.getYear();
         int numOfleavesThisYear = 0;
         for(DatesPair pair: leaves){
-            if(pair.getEnd().getYear() == year || pair.getStart().getYear() == year){
-                if((pair.getEnd()).compareTo(systemDate) >= 0){
+            if (pair.getEnd().getYear() == year || pair.getStart().getYear() == year){
+                if ((pair.getEnd()).compareTo(systemDate) >= 0){
                     numOfleavesThisYear++;
                 }
             }
         }
-        if(numOfleavesThisYear == 0){
+        if (numOfleavesThisYear == 0){
             res = res + "--";
         }
         else{
             for(DatesPair pair: leaves){
-                if(pair.getEnd().getYear() == year || pair.getStart().getYear() == year){
-                    if((pair.getEnd()).compareTo(systemDate) >= 0){
+                if (pair.getEnd().getYear() == year || pair.getStart().getYear() == year){
+                    if ((pair.getEnd()).compareTo(systemDate) >= 0){
                         res += " " + pair.getStart() + " to " + pair.getEnd() + ",";
                     }
                 }
@@ -171,5 +171,18 @@ public class Employee implements Comparable<Employee>{
     public void unsetTeam(){
         team = null;
     }
+
+    public double calculateMP(Project p){
+        DatesPair period = p.getFullPeriod();
+        double periodLen = Day.getPeriod(period.getStart(), period.getEnd());
+        for(DatesPair leave: leaves){
+            if (Day.overlap(leave, period)){
+                periodLen -= Day.getOverlapPeriod(leave, period);
+            }
+        }
+        double res = periodLen/Day.getPeriod(period.getStart(), period.getEnd());
+        return res;
+    }
+
 }
  

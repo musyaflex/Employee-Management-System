@@ -5,7 +5,7 @@ public class CmdStartNewDay extends RecordedCommand{
 	public void execute(String[] cmdParts)
 	{
                 try{
-                        if(cmdParts.length<2)
+                        if (cmdParts.length<2)
                                 throw new ExInsufficientArguments();
                         datePrev = SystemDate.getInstance();
                         SystemDate.setInstance(cmdParts[1]);
